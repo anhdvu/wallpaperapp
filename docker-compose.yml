@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  service:
+    image: anhdvu/wallpaperservice:latest
+    ports:
+      - 8080:80
+    restart: unless-stopped
+    depends_on:
+      - database
+    volumes:
+      - ./storage:/var/www/html/storage
+      # Uncomment the following line only if you wish to use your own .env file
+      #- ./.env:/var/www/html/.env
+
+  database:
+    image: mysql:5
+    restart: unless-stopped
+    environment:
+      # Database credentials should only be updated if you use your own .env file.
+      # The following credentials are set to work with the service image above.
+      MYSQL_DATABASE: wallpapers
+      MYSQL_ROOT_PASSWORD: infinity
+      MYSQL_USER: infinity
+      MYSQL_PASSWORD: infinity
+    volumes:
+      - ./db:/var/lib/mysql
